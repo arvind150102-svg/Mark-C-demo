@@ -62,7 +62,8 @@ class ExtendedTests(unittest.TestCase):
                 with self.assertRaises(ValueError):load_inputs(p)
     def test_cli_valid(self):
         for script in ['pricing.py','sensitivity.py']:
-            p=subprocess.run([sys.executable,str(ROOT/script)],capture_output=True,text=True,check=True,cwd='/tmp')
+            with tempfile.TemporaryDirectory() as working_directory:
+                p=subprocess.run([sys.executable,str(ROOT/script)],capture_output=True,text=True,check=True,cwd=working_directory)
             self.assertIsInstance(json.loads(p.stdout),dict)
             self.assertEqual(p.stderr,'')
     def test_cli_invalid(self):
