@@ -13,8 +13,13 @@ Use Python 3.10 or later. No third-party packages, API keys, database or network
 
     python pricing.py
     python -m unittest discover -s tests -v
+    python sensitivity.py
 
 The script reads examples/pricing.json. Record your Python version and the repository commit when comparing results. Money inputs are finite nonnegative decimal strings; counts are nonnegative integers. The horizon must be exactly one month and amounts are labelled USD. Exact non-integer outputs are rational strings such as 3/5, avoiding hidden currency rounding.
+
+The optional --input PATH argument reads a local synthetic JSON file. Input files are limited to 16 KiB; duplicate keys are rejected. Monetary strings are limited to 32 characters and customer counts to one billion. These are explicit resource limits, not economic constraints.
+
+Run python sensitivity.py --retained 600 661 662 800 1000 for a deterministic table of assumed retention scenarios. No probabilities are calculated. See [the evaluation guide](docs/EVALUATION.md) for a practical review checklist.
 
 ## Read the arithmetic
 
@@ -30,9 +35,11 @@ The threshold is reported only when the alternative unit contribution is positiv
 
 ## What has been checked
 
-The local test suite checks the arithmetic, threshold boundary, ties, zero counts and cost, scaled monetary inputs, input-key order, malformed inputs, unsupported horizons and exact fractional results. Tests validate this narrow example only. They do not establish real-world predictive accuracy, customer outcomes, business readiness, causal effects or production performance.
+The test suite checks the arithmetic, threshold boundary, ties, zero counts and cost, scaled monetary inputs, input-key order, malformed inputs, unsupported horizons and exact fractional results. Tests validate this narrow example only. They do not establish real-world predictive accuracy, customer outcomes, business readiness, causal effects or production performance.
 
 MARK C remains experimental and numerical validation continues. Operational use requires separate correction and revalidation. The broader economic model is a development vision. No AI learning or web retrieval is performed by this example, and no claim of improved mathematical or economic modelling follows from it.
+
+GitHub Actions runs these same tests and fixture comparisons on pushes and pull requests. The workflow has read-only repository permissions, no secret references, no dependency installation and a five-minute timeout. A green run validates only this example.
 
 ## Discuss a bounded evaluation
 

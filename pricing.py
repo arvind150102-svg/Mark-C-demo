@@ -1,12 +1,13 @@
 """Standalone synthetic monthly contribution comparison, using exact arithmetic."""
 from fractions import Fraction
 import json
+import argparse
 import re
 from pathlib import Path
 
 
 def money(value):
-    if not isinstance(value, str) or re.fullmatch(r'[0-9]+(?:\.[0-9]+)?', value) is None:
+    if not isinstance(value, str) or len(value) > 32 or re.fullmatch(r'[0-9]+(?:\.[0-9]+)?', value) is None:
         raise ValueError('Money inputs must be finite decimal strings')
     try:
         result = Fraction(value)
@@ -18,8 +19,8 @@ def money(value):
 
 
 def customers(value):
-    if type(value) is not int or value < 0:
-        raise ValueError('Customer counts must be nonnegative integers')
+    if type(value) is not int or not 0 <= value <= 1_000_000_000:
+        raise ValueError('Customer counts must be integers between 0 and 1000000000')
     return value
 
 
@@ -51,5 +52,37 @@ def compare(data):
             'interpretation': 'Exact assumed contribution arithmetic; not a price recommendation or forecast'}
 
 
+def load_inputs(path):
+    """Reject large files and duplicate JSON keys rather than silently replacing inputs."""
+    with Path(path).open('rb') as stream:
+        raw = stream.read(16385)
+    if len(raw) > 16384:
+        raise ValueError('Input JSON must be at most 16384 bytes')
+    def unique_pairs(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError('Duplicate JSON input field: ' + key)
+            result[key] = value
+        return result
+    try:
+        data = json.loads(raw.decode('utf-8'), object_pairs_hook=unique_pairs)
+    except (UnicodeError, RecursionError) as exc:
+        raise ValueError('Input must be a shallow UTF-8 JSON object') from exc
+    compare(data)
+    return data
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--input', type=Path, default=Path(__file__).parent/'examples'/'pricing.json')
+    args = parser.parse_args()
+    try:
+        result = compare(load_inputs(args.input))
+    except (ValueError, OSError) as exc:
+        parser.exit(2, f'Invalid scenario: {exc}\n')
+    print(json.dumps(result, indent=2, sort_keys=True))
+
+
 if __name__ == '__main__':
-    print(json.dumps(compare(json.loads((Path(__file__).parent/'examples'/'pricing.json').read_text())), indent=2, sort_keys=True))
+    main()

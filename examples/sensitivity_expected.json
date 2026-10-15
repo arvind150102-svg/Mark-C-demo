@@ -1,0 +1,66 @@
+{
+  "interpretation": "Enumerated assumptions only; no probabilities or predicted retention",
+  "rows": [
+    {
+      "alternative_contribution": "35400",
+      "baseline_contribution": "39000",
+      "comparison": "baseline_higher",
+      "currency": "USD",
+      "difference": "-3600",
+      "horizon_months": 1,
+      "interpretation": "Exact assumed contribution arithmetic; not a price recommendation or forecast",
+      "minimum_customers_to_exceed_baseline": 662,
+      "retained_customers": 600,
+      "threshold_within_baseline_cohort": true
+    },
+    {
+      "alternative_contribution": "38999",
+      "baseline_contribution": "39000",
+      "comparison": "baseline_higher",
+      "currency": "USD",
+      "difference": "-1",
+      "horizon_months": 1,
+      "interpretation": "Exact assumed contribution arithmetic; not a price recommendation or forecast",
+      "minimum_customers_to_exceed_baseline": 662,
+      "retained_customers": 661,
+      "threshold_within_baseline_cohort": true
+    },
+    {
+      "alternative_contribution": "39058",
+      "baseline_contribution": "39000",
+      "comparison": "alternative_higher",
+      "currency": "USD",
+      "difference": "58",
+      "horizon_months": 1,
+      "interpretation": "Exact assumed contribution arithmetic; not a price recommendation or forecast",
+      "minimum_customers_to_exceed_baseline": 662,
+      "retained_customers": 662,
+      "threshold_within_baseline_cohort": true
+    },
+    {
+      "alternative_contribution": "47200",
+      "baseline_contribution": "39000",
+      "comparison": "alternative_higher",
+      "currency": "USD",
+      "difference": "8200",
+      "horizon_months": 1,
+      "interpretation": "Exact assumed contribution arithmetic; not a price recommendation or forecast",
+      "minimum_customers_to_exceed_baseline": 662,
+      "retained_customers": 800,
+      "threshold_within_baseline_cohort": true
+    },
+    {
+      "alternative_contribution": "59000",
+      "baseline_contribution": "39000",
+      "comparison": "alternative_higher",
+      "currency": "USD",
+      "difference": "20000",
+      "horizon_months": 1,
+      "interpretation": "Exact assumed contribution arithmetic; not a price recommendation or forecast",
+      "minimum_customers_to_exceed_baseline": 662,
+      "retained_customers": 1000,
+      "threshold_within_baseline_cohort": true
+    }
+  ],
+  "scenario_count": 5
+}
