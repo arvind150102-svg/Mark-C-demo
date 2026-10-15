@@ -1,0 +1,11 @@
+{
+  "alternative_contribution": "47200",
+  "baseline_contribution": "39000",
+  "comparison": "alternative_higher",
+  "currency": "USD",
+  "difference": "8200",
+  "horizon_months": 1,
+  "interpretation": "Exact assumed contribution arithmetic; not a price recommendation or forecast",
+  "minimum_customers_to_exceed_baseline": 662,
+  "threshold_within_baseline_cohort": true
+}
