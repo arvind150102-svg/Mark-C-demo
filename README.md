@@ -7,6 +7,10 @@ Inspect the assumptions behind one SaaS pricing question: if a monthly price ris
 
 MARK C is developing experimental, assumption-led decision support for founders and finance teams. This repository is an independently written educational example using synthetic inputs and exact arithmetic. It contains no proprietary engine code and does not run or validate the deployed MARK C application.
 
+## Open the example report
+
+Download [examples/report.html](examples/report.html) with GitHub's **Download raw file** button and open it in a browser. It shows the input assumptions, exact contribution arithmetic and retention boundary in a self-contained offline report. No Python is needed to read it. Follow the [five-minute walkthrough](docs/QUICKSTART.md) to inspect or regenerate it. GitHub's file view displays the HTML source.
+
 ## Run locally
 
 Use Python 3.10 or later. No third-party packages, API keys, database or network access are required by the example.
@@ -14,12 +18,15 @@ Use Python 3.10 or later. No third-party packages, API keys, database or network
     python pricing.py
     python -m unittest discover -s tests -v
     python sensitivity.py
+    python report.py --output my-pricing-report.html
 
 The script reads examples/pricing.json. Record your Python version and the repository commit when comparing results. Money inputs are finite nonnegative decimal strings; counts are nonnegative integers. The horizon must be exactly one month and amounts are labelled USD. Exact non-integer outputs are rational strings such as 3/5, avoiding hidden currency rounding.
 
 The optional --input PATH argument reads a local synthetic JSON file. Input files are limited to 16 KiB; duplicate keys are rejected. Monetary strings are limited to 32 characters and customer counts to one billion. These are explicit resource limits, not economic constraints.
 
 Run python sensitivity.py --retained 600 661 662 800 1000 for a deterministic table of assumed retention scenarios. No probabilities are calculated. See [the evaluation guide](docs/EVALUATION.md) for a practical review checklist.
+
+The report command calls the same pricing and sensitivity functions, supports --input and --retained, and refuses to overwrite an existing output file. Without --retained, it selects feasible counts for the current cohort, including the strict-threshold boundary when attainable. The report contains an exact JSON audit and normalized-input fingerprint; record your repository commit and Python version separately. Its HTML has no scripts, telemetry or external assets.
 
 ## Read the arithmetic
 
@@ -35,7 +42,7 @@ The threshold is reported only when the alternative unit contribution is positiv
 
 ## What has been checked
 
-The test suite checks the arithmetic, threshold boundary, ties, zero counts and cost, scaled monetary inputs, input-key order, malformed inputs, unsupported horizons and exact fractional results. Tests validate this narrow example only. They do not establish real-world predictive accuracy, customer outcomes, business readiness, causal effects or production performance.
+The test suite checks the arithmetic, threshold boundary, ties, zero counts and cost, scaled monetary inputs, input-key order, malformed inputs, unsupported horizons and exact fractional results. Report checks cover calculation agreement, boundary presentation, exact subcent amounts, deterministic output, offline HTML and file preservation. Tests validate this narrow example only. They do not establish real-world predictive accuracy, customer outcomes, business readiness, causal effects or production performance.
 
 MARK C remains experimental and numerical validation continues. Operational use requires separate correction and revalidation. The broader economic model is a development vision. No AI learning or web retrieval is performed by this example, and no claim of improved mathematical or economic modelling follows from it.
 

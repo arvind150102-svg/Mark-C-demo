@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+<title>MARK C | Pricing assumption report</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, sans-serif; color: #17243b; background: #edf1f7; }
+* { box-sizing: border-box; }
+body { margin: 0; line-height: 1.6; }
+main { max-width: 1020px; margin: 32px auto; padding: 36px; background: #fff; border-radius: 18px; }
+header { border-bottom: 1px solid #dbe1eb; padding-bottom: 22px; }
+.eyebrow { color: #4c4288; font-weight: 750; letter-spacing: .12em; font-size: .8rem; }
+h1 { margin: 8px 0; font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.15; }
+h2 { font-size: 1.2rem; margin-top: 30px; }
+p { margin: 10px 0; }
+.lede { max-width: 75ch; color: #45536a; }
+.notice { padding: 14px 18px; border-left: 4px solid #6554a4; background: #f2f0fa; }
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 24px 0; }
+.card { background: #f3f6fa; border: 1px solid #dbe1eb; border-radius: 12px; padding: 18px; }
+.card p { margin: 0; color: #45536a; font-size: .9rem; }
+.value { display: block; margin: 8px 0; font-size: clamp(1.3rem, 4vw, 1.8rem); font-weight: 750; overflow-wrap: anywhere; }
+.card small { color: #45536a; }
+table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+caption { text-align: left; color: #45536a; padding-bottom: 10px; }
+th, td { text-align: left; padding: 12px; border-bottom: 1px solid #dbe1eb; overflow-wrap: anywhere; }
+thead { background: #17243b; color: #fff; }
+tbody th { font-weight: 550; }
+.selected { background: #eef5f2; }
+.tag { font-size: .75rem; font-weight: 650; color: #215d46; display: inline-block; }
+.threshold { padding: 16px 20px; border: 1px solid #c9d3e4; border-radius: 10px; }
+.math, code { font-family: ui-monospace, monospace; overflow-wrap: anywhere; }
+pre { white-space: pre-wrap; overflow-wrap: anywhere; background: #f3f6fa; padding: 16px; font-size: .8rem; }
+summary { cursor: pointer; padding: 10px 0; font-weight: 650; }
+footer { color: #45536a; font-size: .85rem; border-top: 1px solid #dbe1eb; margin-top: 28px; padding-top: 16px; }
+@media (max-width: 640px) { main { margin: 0; padding: 20px; border-radius: 0; } .cards { grid-template-columns: 1fr; gap: 10px; } th, td { padding: 8px 4px; font-size: .8rem; } .value { margin: 4px 0; } }
+@media print { :root { background: #fff; } main { margin: 0; padding: 0; } .cards, tr, .threshold { break-inside: avoid; } .audit { display: none; } }
+</style>
+</head>
+<body><main>
+<header><div class="eyebrow">MARK C / PUBLIC PRICING EXAMPLE</div>
+<h1>What must remain after a price change?</h1>
+<p class="lede">Compare two monthly prices against an explicit retained-customer assumption.
+Every result below follows from the stated inputs.</p>
+<p class="notice"><strong>Synthetic evaluation only.</strong> Retention is an assumption;
+this report assigns no likelihood to it and makes no price recommendation.</p></header>
+<section aria-label="Selected scenario results" class="cards">
+<div class="card"><p>Baseline contribution</p><span class="value">$39,000</span><small>1,000 starting customers</small></div>
+<div class="card"><p>Alternative contribution</p><span class="value">$47,200</span><small>800 assumed retained customers</small></div>
+<div class="card"><p>Difference from baseline</p><span class="value">$8,200</span><small>Alternative higher</small></div>
+</section>
+<section><h2>01 / Inspect the assumptions</h2>
+<table><caption>Invented inputs; all monetary amounts are USD.</caption><tbody><tr><th scope="row">Baseline monthly price</th><td>$49</td></tr><tr><th scope="row">Alternative monthly price</th><td>$69</td></tr><tr><th scope="row">Variable cost per customer / month</th><td>$10</td></tr><tr><th scope="row">Starting paying customers</th><td>1,000</td></tr><tr><th scope="row">Selected retained customers</th><td>800</td></tr><tr><th scope="row">Comparison period / currency</th><td>1 month / USD</td></tr></tbody></table>
+<p class="math">Baseline: ($49 − $10) × 1,000 = $39,000<br>
+Alternative: ($69 − $10) × 800 = $47,200</p></section>
+<section><h2>02 / Check the retention boundary</h2>
+<p class="threshold">662 retained customers are needed to strictly exceed the baseline. A tie does not exceed it.</p>
+<table><caption>Assumed retention scenarios, sorted by customer count. Rows are not forecasts.</caption>
+<thead><tr><th scope="col">Retained customers</th><th scope="col">Alternative contribution</th><th scope="col">Difference</th><th scope="col">Comparison</th></tr></thead>
+<tbody><tr class="scenario"><th scope="row">0</th><td>$0</td><td>-$39,000</td><td>Baseline higher</td></tr><tr class="scenario"><th scope="row">600</th><td>$35,400</td><td>-$3,600</td><td>Baseline higher</td></tr><tr class="scenario"><th scope="row">661</th><td>$38,999</td><td>-$1</td><td>Baseline higher</td></tr><tr class="scenario"><th scope="row">662</th><td>$39,058</td><td>$58</td><td>Alternative higher</td></tr><tr class="selected"><th scope="row">800 <span class="tag">Selected</span></th><td>$47,200</td><td>$8,200</td><td>Alternative higher</td></tr><tr class="scenario"><th scope="row">1,000</th><td>$59,000</td><td>$20,000</td><td>Alternative higher</td></tr></tbody></table>
+<p>Money is displayed exactly, without rounding to cents. The audit data retains the calculator's rational strings.</p></section>
+<section><h2>03 / Decide what to validate next</h2>
+<p>Compare one pricing question with your existing spreadsheet baseline. Agree how to assess
+calculation consistency, assumption clarity and review effort before discussing a fixed-fee pilot.</p>
+<p>Contribution excludes fixed costs, tax, acquisition, expansion, discounting and market response.
+Evidence about actual retention must come from a separate evaluation. This educational example
+does not run or validate the private MARK C engine or establish production readiness.</p>
+<p>For an evaluation discussion: arvind150102@gmail.com. Use synthetic or nonconfidential inputs.
+Scope, fee, timing and data access require separate agreement; licensing or technology transfer
+would be scoped separately after evaluation.</p></section>
+<section class="audit"><h2>Reproduce this report</h2>
+<p>Generated by <code>report.py</code> using <code>pricing.compare</code> and
+<code>sensitivity.sensitivity</code>. Report format 1. Record the repository commit and Python
+version separately when comparing reports.</p>
+<details><summary>Exact inputs, results and input fingerprint</summary><pre>{
+  &quot;comparison&quot;: {
+    &quot;alternative_contribution&quot;: &quot;47200&quot;,
+    &quot;baseline_contribution&quot;: &quot;39000&quot;,
+    &quot;comparison&quot;: &quot;alternative_higher&quot;,
+    &quot;currency&quot;: &quot;USD&quot;,
+    &quot;difference&quot;: &quot;8200&quot;,
+    &quot;horizon_months&quot;: 1,
+    &quot;interpretation&quot;: &quot;Exact assumed contribution arithmetic; not a price recommendation or forecast&quot;,
+    &quot;minimum_customers_to_exceed_baseline&quot;: 662,
+    &quot;threshold_within_baseline_cohort&quot;: true
+  },
+  &quot;input_sha256&quot;: &quot;d94aa68caf289f0e9ec66cb2abc950ca35d6ee4bef03f1895db74289bb1b1455&quot;,
+  &quot;inputs&quot;: {
+    &quot;alternative_price&quot;: &quot;69&quot;,
+    &quot;baseline_customers&quot;: 1000,
+    &quot;baseline_price&quot;: &quot;49&quot;,
+    &quot;currency&quot;: &quot;USD&quot;,
+    &quot;horizon_months&quot;: 1,
+    &quot;retained_customers&quot;: 800,
+    &quot;unit_cost&quot;: &quot;10&quot;
+  },
+  &quot;report_format_version&quot;: 1,
+  &quot;scenarios&quot;: {
+    &quot;interpretation&quot;: &quot;Enumerated assumptions only; no probabilities or predicted retention&quot;,
+    &quot;rows&quot;: [
+      {
+        &quot;alternative_contribution&quot;: &quot;0&quot;,
+        &quot;baseline_contribution&quot;: &quot;39000&quot;,
+        &quot;comparison&quot;: &quot;baseline_higher&quot;,
+        &quot;currency&quot;: &quot;USD&quot;,
+        &quot;difference&quot;: &quot;-39000&quot;,
+        &quot;horizon_months&quot;: 1,
+        &quot;interpretation&quot;: &quot;Exact assumed contribution arithmetic; not a price recommendation or forecast&quot;,
+        &quot;minimum_customers_to_exceed_baseline&quot;: 662,
+        &quot;retained_customers&quot;: 0,
+        &quot;threshold_within_baseline_cohort&quot;: true
+      },
+      {
+        &quot;alternative_contribution&quot;: &quot;35400&quot;,
+        &quot;baseline_contribution&quot;: &quot;39000&quot;,
+        &quot;comparison&quot;: &quot;baseline_higher&quot;,
+        &quot;currency&quot;: &quot;USD&quot;,
+        &quot;difference&quot;: &quot;-3600&quot;,
+        &quot;horizon_months&quot;: 1,
+        &quot;interpretation&quot;: &quot;Exact assumed contribution arithmetic; not a price recommendation or forecast&quot;,
+        &quot;minimum_customers_to_exceed_baseline&quot;: 662,
+        &quot;retained_customers&quot;: 600,
+        &quot;threshold_within_baseline_cohort&quot;: true
+      },
+      {
+        &quot;alternative_contribution&quot;: &quot;38999&quot;,
+        &quot;baseline_contribution&quot;: &quot;39000&quot;,
+        &quot;comparison&quot;: &quot;baseline_higher&quot;,
+        &quot;currency&quot;: &quot;USD&quot;,
+        &quot;difference&quot;: &quot;-1&quot;,
+        &quot;horizon_months&quot;: 1,
+        &quot;interpretation&quot;: &quot;Exact assumed contribution arithmetic; not a price recommendation or forecast&quot;,
+        &quot;minimum_customers_to_exceed_baseline&quot;: 662,
+        &quot;retained_customers&quot;: 661,
+        &quot;threshold_within_baseline_cohort&quot;: true
+      },
+      {
+        &quot;alternative_contribution&quot;: &quot;39058&quot;,
+        &quot;baseline_contribution&quot;: &quot;39000&quot;,
+        &quot;comparison&quot;: &quot;alternative_higher&quot;,
+        &quot;currency&quot;: &quot;USD&quot;,
+        &quot;difference&quot;: &quot;58&quot;,
+        &quot;horizon_months&quot;: 1,
+        &quot;interpretation&quot;: &quot;Exact assumed contribution arithmetic; not a price recommendation or forecast&quot;,
+        &quot;minimum_customers_to_exceed_baseline&quot;: 662,
+        &quot;retained_customers&quot;: 662,
+        &quot;threshold_within_baseline_cohort&quot;: true
+      },
+      {
+        &quot;alternative_contribution&quot;: &quot;47200&quot;,
+        &quot;baseline_contribution&quot;: &quot;39000&quot;,
+        &quot;comparison&quot;: &quot;alternative_higher&quot;,
+        &quot;currency&quot;: &quot;USD&quot;,
+        &quot;difference&quot;: &quot;8200&quot;,
+        &quot;horizon_months&quot;: 1,
+        &quot;interpretation&quot;: &quot;Exact assumed contribution arithmetic; not a price recommendation or forecast&quot;,
+        &quot;minimum_customers_to_exceed_baseline&quot;: 662,
+        &quot;retained_customers&quot;: 800,
+        &quot;threshold_within_baseline_cohort&quot;: true
+      },
+      {
+        &quot;alternative_contribution&quot;: &quot;59000&quot;,
+        &quot;baseline_contribution&quot;: &quot;39000&quot;,
+        &quot;comparison&quot;: &quot;alternative_higher&quot;,
+        &quot;currency&quot;: &quot;USD&quot;,
+        &quot;difference&quot;: &quot;20000&quot;,
+        &quot;horizon_months&quot;: 1,
+        &quot;interpretation&quot;: &quot;Exact assumed contribution arithmetic; not a price recommendation or forecast&quot;,
+        &quot;minimum_customers_to_exceed_baseline&quot;: 662,
+        &quot;retained_customers&quot;: 1000,
+        &quot;threshold_within_baseline_cohort&quot;: true
+      }
+    ],
+    &quot;scenario_count&quot;: 6
+  }
+}</pre></details>
+<p>The SHA-256 fingerprint covers normalized inputs only; it is not evidence of validation or authorship.</p></section>
+<footer>MARK C remains experimental. This static file works offline, with no scripts, telemetry or external assets.
+Use your browser's print command for a printable summary.</footer>
+</main></body></html>
