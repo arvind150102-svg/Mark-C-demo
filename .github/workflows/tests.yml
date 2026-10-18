@@ -22,3 +22,5 @@ jobs:
           diff -u examples/expected.json /tmp/pricing-result.json
           python3 sensitivity.py > /tmp/sensitivity-result.json
           diff -u examples/sensitivity_expected.json /tmp/sensitivity-result.json
+          python3 report.py > /tmp/pricing-report.html
+          diff -u examples/report.html /tmp/pricing-report.html

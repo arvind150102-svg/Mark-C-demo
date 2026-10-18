@@ -12,6 +12,8 @@ Write down the baseline method you use today. Agree what should be compared: ari
 
 Run python pricing.py and python -m unittest discover -s tests -v. Record the commit and Python version. Compare the output with examples/expected.json. Run python sensitivity.py to compare five assumed retention counts against the same baseline; its expected output is in examples/sensitivity_expected.json.
 
+For a browser-readable review, run `python report.py --output evaluation.html` and open the new file locally. The [quickstart](QUICKSTART.md) explains custom inputs, scenario counts and the exact audit section. The committed `examples/report.html` can be read without Python. Record the commit with the report; its input hash alone does not identify the implementation or prove validation.
+
 Change only one assumption at a time in a local copy of examples/pricing.json, then use --input followed by that path. The sensitivity command also accepts --retained followed by integer counts. It sorts the rows, rejects duplicates and accepts at most 101 scenarios. Scenario frequency is never a probability or robustness score.
 
 ## Interpret the limits
